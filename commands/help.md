@@ -30,7 +30,7 @@ COMMANDS:
 
   /prd:refine            Iterate on current section with more detail
 
-  /prd:done              Finalize PRD and exit
+  /prd:done              Finalize PRD, generate final document, and exit
 
   /prd:help              Show this help
 
@@ -92,8 +92,12 @@ HOW IT WORKS:
 
 SESSION FILES:
 
-  PRD saved to: prd-[topic]-[timestamp].md
+  Working document: prd-[topic]-[timestamp].md
+  Final PRD:        prd-[topic]-FINAL.md
   Located in: current working directory
+
+  The working document preserves full history and status markers.
+  The final PRD is clean, stakeholder-ready, with executive summary.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

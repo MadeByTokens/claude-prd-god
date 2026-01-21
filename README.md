@@ -2,6 +2,8 @@
 
 A Claude Code plugin for creating Product Requirements Documents through interactive, section-by-section refinement.
 
+AI makes it dangerously easy to skip straight to code. You describe something, it builds something, and two weeks later you're ripping it apart because nobody asked "what happens when the database is down?" or "should this config live in one place or twenty?" This plugin locks Claude into requirements-analyst mode—no code allowed—until you've answered the questions that matter. It captures your taste and judgment (things AI can't infer), forces you through Anti-Accidental-Architecture checkpoints, and produces a spec detailed enough that any AI agent can build from it without asking clarifying questions.
+
 ## Installation
 
 Add to `~/.claude/settings.json`:
@@ -27,7 +29,7 @@ claude --plugin-dir /path/to/claude-prd-god
 | `/prd:status` | Show completion progress |
 | `/prd:review` | Analyze PRD for gaps |
 | `/prd:refine` | Iterate on current section |
-| `/prd:done` | Finalize and exit PRD mode |
+| `/prd:done` | Finalize, generate final document, and exit PRD mode |
 | `/prd:help` | Show help |
 
 ### Starting a session
@@ -85,7 +87,7 @@ Import from a brainstorm session:
 2. The `prd-enforcer.sh` hook injects rules on every prompt while PRD mode is active
 3. Claude works through sections interactively, asking questions and drafting content
 4. You review and approve each section before moving on
-5. `/prd:done` finalizes the PRD and removes the state file
+5. `/prd:done` generates a clean final PRD with executive summary and removes the state file
 
 ## Hook enforcement
 
@@ -98,7 +100,8 @@ While PRD mode is active, Claude:
 ## Files generated
 
 - `.prd-state` - Session state (deleted on `/prd:done`)
-- `prd-[topic]-[timestamp].md` - The PRD document (preserved)
+- `prd-[topic]-[timestamp].md` - Working document with full history (preserved)
+- `prd-[topic]-FINAL.md` - Clean, stakeholder-ready PRD with executive summary (generated on `/prd:done`)
 
 ## Project structure
 
@@ -120,6 +123,7 @@ claude-prd-god/
 └── scripts/
     ├── start-prd-session.sh
     ├── end-prd-session.sh
+    ├── generate-final-prd.sh
     ├── approve-prd-write.sh
     ├── approve-prd-bash.sh
     └── approve-prd-websearch.sh

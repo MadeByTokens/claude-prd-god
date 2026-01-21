@@ -19,16 +19,17 @@ A Claude Code plugin that transforms brainstorm ideas into Product Requirements 
 2. `prd-enforcer.sh` fires on every prompt, checks for `.prd-state`
 3. If active, outputs `<prd-mode-enforced>` rules blocking code generation
 4. PreToolUse hooks validate Write/Bash/WebSearch operations
-5. `/prd:done` → `end-prd-session.sh` removes `.prd-state`, exiting PRD mode
+5. `/prd:done` → `generate-final-prd.sh` creates clean final PRD, then `end-prd-session.sh` removes `.prd-state`
 
 ### Auto-Approval Scripts (`scripts/`)
 - **`approve-prd-write.sh`** - Only auto-approves `prd-*.md` files
-- **`approve-prd-bash.sh`** - Only auto-approves session scripts (`start-prd-session.sh`, `end-prd-session.sh`)
+- **`approve-prd-bash.sh`** - Only auto-approves session scripts (`start-prd-session.sh`, `end-prd-session.sh`, `generate-final-prd.sh`)
 - **`approve-prd-websearch.sh`** - Allows web searches when PRD session is active
 
 ### State Management
 - **`.prd-state`** - Bash-sourceable file with session variables (`PRD_ACTIVE`, `SESSION_FILE`, `CURRENT_SECTION`, `COMPLETED_SECTIONS`, etc.)
-- **`prd-[topic]-[timestamp].md`** - Generated PRD document with 25-section template
+- **`prd-[topic]-[timestamp].md`** - Working PRD document with 25-section template and status markers
+- **`prd-[topic]-FINAL.md`** - Clean, stakeholder-ready PRD with executive summary (generated on `/prd:done`)
 
 ## 25 PRD Sections
 
@@ -56,7 +57,7 @@ Grouped by purpose:
 | `/prd:status` | Show completion progress |
 | `/prd:review` | Gap analysis with ~100 checklist items |
 | `/prd:refine` | Iterate on current section |
-| `/prd:done` | Finalize PRD and exit mode |
+| `/prd:done` | Generate final PRD and exit mode |
 | `/prd:help` | Show help |
 
 ## Git Conventions
