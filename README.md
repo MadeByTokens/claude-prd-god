@@ -1,3 +1,5 @@
+<img width="1024" height="339" alt="image" src="https://github.com/user-attachments/assets/00200a4f-480b-493b-bd8a-8e87f27d4741" />
+
 # claude-prd-god
 
 A Claude Code plugin for creating Product Requirements Documents through interactive, section-by-section refinement.
