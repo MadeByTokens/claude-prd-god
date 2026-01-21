@@ -35,6 +35,20 @@ EOF
   exit 0
 fi
 
+# Approve generate-final-prd.sh
+if [[ "$command" == *"scripts/generate-final-prd.sh"* ]]; then
+  cat << 'EOF'
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "allow",
+    "permissionDecisionReason": "PRD final generation"
+  }
+}
+EOF
+  exit 0
+fi
+
 # Do NOT auto-approve any other bash commands
 # This prevents Claude from running code, installing packages, etc.
 exit 0

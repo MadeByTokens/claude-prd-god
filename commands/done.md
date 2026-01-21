@@ -9,10 +9,12 @@ The user is ready to finalize their PRD and exit PRD mode.
 ## Actions
 
 1. **Run quick review** to check completeness
-2. **Add final summary** to session file
-3. **Run end script** to clear state
-4. **Display completion summary**
-5. **Offer next steps**
+2. **Add final summary** to working session file
+3. **Generate clean final PRD** (stakeholder-ready document)
+4. **Add executive summary** to final PRD
+5. **Run end script** to clear state
+6. **Display completion summary**
+7. **Offer next steps**
 
 ## Pre-Exit Review
 
@@ -99,20 +101,63 @@ If user confirms:
 4. Implementation planning
 ```
 
-2. **Run end script:**
+2. **Generate clean final PRD:**
+```bash
+PLUGIN_PATH/scripts/generate-final-prd.sh
+```
+
+This creates a stakeholder-ready document that:
+- Removes all "[To be filled]" placeholders
+- Removes "Section Status" markers
+- Removes template helper text
+- Cleans up empty sections
+
+3. **Add Executive Summary to final PRD:**
+
+Read the generated final PRD file and prepend an Executive Summary section immediately after the title. Write this using the Edit tool:
+
+```markdown
+## Executive Summary
+
+**Product:** [Product name from title]
+
+**Vision:** [One sentence from Section 0.1]
+
+**Problem:** [One sentence summary from Section 1]
+
+**Target Users:** [Primary persona from Section 2]
+
+**Key Capabilities:**
+- [Top 3-5 functional requirements from Section 4]
+
+**Success Metrics:** [2-3 key metrics from Section 13]
+
+**Scope:** [v1 scope summary from Section 14]
+
+**Technical Approach:** [Framework/stack from Section 19]
+
+---
+```
+
+4. **Run end script:**
 ```bash
 PLUGIN_PATH/scripts/end-prd-session.sh
 ```
 
-3. **Display completion:**
+5. **Display completion:**
 
 ```
 PRD SESSION COMPLETE
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your PRD has been saved to:
-[session file path]
+Generated files:
+
+  Working document (full history):
+  [session file path]
+
+  Final PRD (stakeholder-ready):
+  [final file path]
 
 Summary:
 - Sections completed: X/25
